@@ -4,13 +4,15 @@ import com.example.book_my_show.DTOs.UserEntryDto;
 import com.example.book_my_show.Entities.UserEntity;
 import com.example.book_my_show.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
     public String addUser(UserEntryDto userEntryDto) {
 
-        UserEntity user = UserEntity.builder().age(userEntryDto
+        UserEntity userEntity = UserEntity.builder().age(userEntryDto
                         .getAge())
                         .email(userEntryDto.getEmail())
                         .mobNo(userEntryDto.getMobNo())
@@ -18,7 +20,7 @@ public class UserService {
                         .name(userEntryDto.getName())
                         .build();
 
-         userRepository.save(user);
+         userRepository.save(userEntity);
 
         return "User added successfully";
     }

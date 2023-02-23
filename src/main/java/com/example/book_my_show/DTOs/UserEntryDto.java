@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntryDto {
-    private String name;
 
+    private String name;
 
     private String email;
 
     private int age;
-
 
     private String mobNo;
 

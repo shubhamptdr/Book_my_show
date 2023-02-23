@@ -1,35 +1,41 @@
 package com.example.book_my_show.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tickets")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private double price;
+
     private String movieName;
-    private LocalTime showTime;
-    private LocalDate showDate;
+
     private String theaterName;
+
+    private LocalDate showDate;
+
+    private LocalTime showTime;
+
+    private double totalAmount;
+
+    private String ticketId = UUID.randomUUID().toString();
 //    private List<> bookedSeats;
 
+    // child wrt to user
     @ManyToOne
     @JoinColumn
-    private UserEntity user;
+    private UserEntity userEntity;
 
+    // child wrt to show
     @ManyToOne
     @JoinColumn
     private ShowEntity showEntity;
