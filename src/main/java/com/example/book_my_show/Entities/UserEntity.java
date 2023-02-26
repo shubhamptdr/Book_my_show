@@ -25,8 +25,8 @@ public class UserEntity {
 
     private int age;
 
-    @NonNull
-    @Column(unique = true)
+
+    @Column(unique = true,nullable = false)
     private String mobNo;
 
     private String address;

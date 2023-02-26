@@ -1,4 +1,4 @@
-package com.example.book_my_show.DTOs;
+package com.example.book_my_show.EntryDtos;
 
 
 import lombok.AllArgsConstructor;
