@@ -23,7 +23,7 @@ public class TheaterService {
     public String addTheater(TheaterEntryDto theaterEntryDto) throws Exception {
 
         if(theaterEntryDto.getName()==null || theaterEntryDto.getLocation()== null){
-            throw new Exception("null valid");
+            throw new Exception("Enter valid Name and Location");
         }
 
         TheaterEntity theaterEntity = TheaterConvertor.convertEntryDtoToEntity(theaterEntryDto);
@@ -65,7 +65,6 @@ public class TheaterService {
             theaterSeatEntityList.add(theaterSeatEntity);
         }
 
-        theaterSeatRepository.saveAll(theaterSeatEntityList);
         return theaterSeatEntityList;
 
     }
