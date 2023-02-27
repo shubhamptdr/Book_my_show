@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "shows")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShowEntity {
@@ -54,7 +55,6 @@ public class ShowEntity {
     // parent wrt to showSeat
     @OneToMany(mappedBy = "showEntity",cascade = CascadeType.ALL)
     private List<ShowSeatEntity> listOfShowSeats = new ArrayList<>();
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.book_my_show.Entities;
 
+import com.example.book_my_show.Enums.SeatType;
 import com.example.book_my_show.Enums.ShowType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,7 @@ public class ShowSeatEntity {
     private boolean isBooked;
 
     @Enumerated(value = EnumType.STRING)
-    private ShowType seatType;
+    private SeatType seatType;
 
     @CreationTimestamp // check later
     private Date bookedAt;

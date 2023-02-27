@@ -17,12 +17,21 @@ import java.util.List;
 public class TheaterService {
     @Autowired
     TheaterSeatRepository theaterSeatRepository;
+    @Autowired
+    TheaterRepository theaterRepository;
 
     public String addTheater(TheaterEntryDto theaterEntryDto) throws Exception {
+
+        if(theaterEntryDto.getName()==null || theaterEntryDto.getLocation()== null){
+            throw new Exception("null valid");
+        }
 
         TheaterEntity theaterEntity = TheaterConvertor.convertEntryDtoToEntity(theaterEntryDto);
 
         List<TheaterSeatEntity> theaterSeatEntityList = createTheaterSeats(theaterEntryDto,theaterEntity);
+        theaterEntity.setTheaterSeatEntityList(theaterSeatEntityList);
+
+        theaterRepository.save(theaterEntity);
 
         return "Theater added successfully";
     }

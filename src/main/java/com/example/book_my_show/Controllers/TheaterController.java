@@ -23,8 +23,8 @@ public class TheaterController {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         }catch (Exception e){
-            String response = "Theater not added";
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            String error = "Theater not added";
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

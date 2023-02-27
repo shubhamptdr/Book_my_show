@@ -30,4 +30,5 @@ public class MovieController {
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
     }
+
 }
