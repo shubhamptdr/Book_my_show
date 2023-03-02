@@ -14,7 +14,7 @@ public class UserService {
     public String addUser(UserEntryDto userEntryDto) throws Exception{
 
         UserEntity userEntity = UserConvertor.convertDtoToEntity(userEntryDto);
-         userRepository.save(userEntity);
+        userRepository.save(userEntity);
 
         return "User added successfully";
     }

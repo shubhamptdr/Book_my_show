@@ -15,8 +15,7 @@ import java.util.List;
 
 @Service
 public class TheaterService {
-    @Autowired
-    TheaterSeatRepository theaterSeatRepository;
+
     @Autowired
     TheaterRepository theaterRepository;
 
@@ -26,11 +25,15 @@ public class TheaterService {
             throw new Exception("Enter valid Name and Location");
         }
 
+        // create entity
         TheaterEntity theaterEntity = TheaterConvertor.convertEntryDtoToEntity(theaterEntryDto);
 
+        // create theaterSeat entity list and don't need to save separately it will save automatically by cascading
         List<TheaterSeatEntity> theaterSeatEntityList = createTheaterSeats(theaterEntryDto,theaterEntity);
+
         theaterEntity.setTheaterSeatEntityList(theaterSeatEntityList);
 
+        // saving theater Entity
         theaterRepository.save(theaterEntity);
 
         return "Theater added successfully";
@@ -50,7 +53,6 @@ public class TheaterService {
                     .seatNo(count+"C")
                     .theaterEntity(theaterEntity)
                     .build();
-
             theaterSeatEntityList.add(theaterSeatEntity);
         }
 
@@ -68,4 +70,6 @@ public class TheaterService {
         return theaterSeatEntityList;
 
     }
+
+
 }

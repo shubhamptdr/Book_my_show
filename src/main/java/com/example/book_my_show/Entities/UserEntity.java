@@ -19,7 +19,6 @@ public class UserEntity {
 
     private String name;
 
-
     @Column(unique = true,nullable = false)
     private String email;
 
@@ -34,4 +33,5 @@ public class UserEntity {
     // parent wrt to ticket
     @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
     private List<TicketEntity> bookedTickets = new ArrayList<>();
+
 }

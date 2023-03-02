@@ -2,7 +2,6 @@ package com.example.book_my_show.Convertors;
 
 import com.example.book_my_show.EntryDtos.TheaterEntryDto;
 import com.example.book_my_show.Entities.TheaterEntity;
-import lombok.Data;
 
 
 public class TheaterConvertor {
@@ -12,4 +11,5 @@ public class TheaterConvertor {
                 .location(theaterEntryDto.getLocation())
                 .build();
     }
+
 }

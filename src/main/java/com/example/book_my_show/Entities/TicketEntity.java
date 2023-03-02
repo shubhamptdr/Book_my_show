@@ -10,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "tickets")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketEntity {
@@ -27,8 +28,10 @@ public class TicketEntity {
 
     private double totalAmount;
 
+    private String bookedSeats;
+
     private String ticketId = UUID.randomUUID().toString();
-//    private List<> bookedSeats;
+
 
     // child wrt to user
     @ManyToOne

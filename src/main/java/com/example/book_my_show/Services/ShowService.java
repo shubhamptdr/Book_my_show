@@ -5,12 +5,17 @@ import com.example.book_my_show.Entities.*;
 import com.example.book_my_show.EntryDtos.ShowEntryDto;
 import com.example.book_my_show.Enums.SeatType;
 import com.example.book_my_show.Repositories.MovieRepository;
+import com.example.book_my_show.Repositories.ShowRepository;
 import com.example.book_my_show.Repositories.TheaterRepository;
+import com.example.book_my_show.ResponseDtos.ShowEntityResponseDto;
+import com.example.book_my_show.ResponseDtos.TheaterSeatEnityResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class ShowService {
@@ -19,14 +24,23 @@ public class ShowService {
 
     @Autowired
     MovieRepository movieRepository;
-    public String addShow(ShowEntryDto showEntryDto){
+
+    @Autowired
+    ShowRepository showRepository;
+    public String addShow(ShowEntryDto showEntryDto) throws Exception {
+        // create sho
         ShowEntity showEntity = ShowConvertor.convertEntryDtoToEntity(showEntryDto);
 
         int movieId = showEntryDto.getMovieId();
         int theaterId = showEntryDto.getTheaterId();
 
+        // fetch MovieEntity & TheaterEntity
         MovieEntity movieEntity = movieRepository.findById(movieId).get();
         TheaterEntity theaterEntity = theaterRepository.findById(theaterId).get();
+
+        if(movieEntity == null || theaterEntity ==null){
+            throw  new Exception("Entered wrong parameter");
+        }
 
         //setting attribute of FK
         showEntity.setMovieEntity(movieEntity);
@@ -36,27 +50,28 @@ public class ShowService {
         List<ShowSeatEntity> showSeatEntities   = createShowSeatEntity(showEntryDto,showEntity);
         showEntity.setListOfShowSeats(showSeatEntities);
 
-        List<ShowEntity> showEntityList = movieEntity.getShowEntityList();
-        showEntityList.add(showEntity);
-        movieEntity.setShowEntityList(showEntityList);
+        //Now we  also need to update the parent entities
 
-        movieRepository.save(movieEntity);
 
-        List<ShowEntity> showEntityList1 = theaterEntity.getShowEntityList();
-        showEntityList1.add(showEntity);
-        theaterEntity.setShowEntityList(showEntityList1);
+       showRepository.save(showEntity);
 
-        theaterRepository.save(theaterEntity);
+//        movieEntity.getShowEntityList().add(showEntity);
+//        theaterEntity.getShowEntityList().add(showEntity);
+//
+//
+//        movieRepository.save(movieEntity);
+//
+//        theaterRepository.save(theaterEntity);
+
+
 
         return "The show has been added successfully";
     }
 
     private List<ShowSeatEntity> createShowSeatEntity(ShowEntryDto showEntryDto, ShowEntity showEntity) {
 
-
-        TheaterEntity theaterEntity = showEntity.getTheaterEntity();
-
-        List<TheaterSeatEntity> theaterSeatEntityList = theaterEntity.getTheaterSeatEntityList();
+        // fetch list of theaterSeats for particular theater;
+        List<TheaterSeatEntity> theaterSeatEntityList = showEntity.getTheaterEntity().getTheaterSeatEntityList();
 
         List<ShowSeatEntity> showSeatEntityList = new ArrayList<>();
         for (TheaterSeatEntity theaterSeatEntity : theaterSeatEntityList){
@@ -66,7 +81,7 @@ public class ShowService {
             showSeatEntity.setSeatNo(theaterSeatEntity.getSeatNo());
             showSeatEntity.setSeatType(theaterSeatEntity.getSeatType());
 
-
+            //setting price here
             if(theaterSeatEntity.getSeatType().equals(SeatType.CLASSIC)){
                 showSeatEntity.setPrice(showEntryDto.getClassicSeatPrice());
             }else {
@@ -80,5 +95,19 @@ public class ShowService {
         }
         return showSeatEntityList;
 
+    }
+
+    public List<ShowEntityResponseDto> getAllShowByTheaterId(int theaterId) {
+        List<ShowEntity> showEntityList = theaterRepository.findById(theaterId).get().getShowEntityList();
+
+        List<ShowEntityResponseDto> showEntityResponseDtoList = new ArrayList<>();
+
+        for (ShowEntity showEntity : showEntityList){
+            ShowEntityResponseDto showEntityResponseDto = ShowConvertor.convertEntityToResponseDto(showEntity);
+
+            showEntityResponseDtoList.add(showEntityResponseDto);
+        }
+
+        return showEntityResponseDtoList;
     }
 }
