@@ -92,6 +92,22 @@ public class TicketService {
 //
 //        userRepository.save(userEntity);
 
+
+        // email integration
+        String body = "Hi "+userEntity.getName()+ "this is to confirm your booking for seat No "+allotedSeats +"for the movie : " + ticketEntity.getMovieName();
+
+
+        MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true);
+        mimeMessageHelper.setFrom("skpatidar222@gmail.com");
+        mimeMessageHelper.setTo(userEntity.getEmail());
+        mimeMessageHelper.setText(body);
+        mimeMessageHelper.setSubject("Confirming your booked Ticket");
+
+        javaMailSender.send(mimeMessage);
+
+
+
         return "Ticket has successfully been added";
     }
 
