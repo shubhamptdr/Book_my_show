@@ -18,4 +18,16 @@ public class UserService {
 
         return "User added successfully";
     }
+
+    public String deleteUser(int userId) throws Exception {
+        userRepository.deleteById(userId);
+        return "User removed successfully";
+    }
+
+    public String updateMobileNo(int userId, String mobNo) throws Exception {
+        UserEntity userEntity = userRepository.findById(userId).get();
+        userEntity.setMobNo(mobNo);
+        return "User updated successfully";
+
+    }
 }
