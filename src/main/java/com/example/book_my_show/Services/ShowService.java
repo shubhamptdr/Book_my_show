@@ -8,8 +8,7 @@ import com.example.book_my_show.Repositories.MovieRepository;
 import com.example.book_my_show.Repositories.ShowRepository;
 import com.example.book_my_show.Repositories.TheaterRepository;
 import com.example.book_my_show.ResponseDtos.ShowEntityResponseDto;
-import com.example.book_my_show.ResponseDtos.TheaterSeatEnityResponseDto;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -94,7 +94,7 @@ public class TicketService {
 
 
         // email integration
-        String body = "Hi "+userEntity.getName()+ "this is to confirm your booking for seat No "+allotedSeats +"for the movie : " + ticketEntity.getMovieName();
+        String body = "Hi "+userEntity.getName()+ " this is to confirm your booking for seat No "+allotedSeats +"for the movie : " + ticketEntity.getMovieName();
 
 
         MimeMessage mimeMessage=javaMailSender.createMimeMessage();
